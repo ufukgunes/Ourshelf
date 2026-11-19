@@ -48,7 +48,7 @@ Uygulamanın temel nesnesi **raf**tır. Film, dizi, kitap, oyun, albüm ve podca
 | **İlk güncelleme** | Eşleşme modu (herkes kaydırır, ortak sağa kaydırılanlar "Eşleşme!") | Faz E |
 | | Raf vitrini + "rafı kopyala" | Faz E |
 | | Ortak özet ("Bu ay birlikte 4 film, 1 kitap") | Faz E |
-| **Sonra** | Widget'lar, Drive yedeği, akıllı listeler, temalar, alternatif ikonlar | Faz E |
+| **Sonra** | Widget'lar, Drive yedeği, akıllı listeler, temalar, alternatif ikonlar (hepsi ücretsiz) | Faz E |
 
 ---
 
@@ -146,7 +146,7 @@ shelves/{shelfId}
 users/{uid}
   displayName, avatarInitials, fcmTokens[]
 ```
-* **Kimlik:** Firebase Auth — Google ile giriş + Sign in with Apple (iOS'ta zorunlu). Kişisel raf için giriş **gerekmez**; yalnızca paylaşım başlatınca/katılınca istenir.
+* **Kimlik:** Firebase Auth. Kişisel raf için giriş **gerekmez**. Paylaşımı ilk kez kullanınca **anonim hesap** oluşturulur ve yalnızca bir görünen ad istenir. Faz D'de bu hesap Google / Sign in with Apple ile **bağlanır** (veriler korunur, cihaz değişince kaybolmaz).
 * **Güvenlik kuralları:** Raf ve alt koleksiyonlarını yalnızca `memberUids` okur/yazar; katılım geçerli bir davet token'ı ile.
 * **Kötüye kullanım:** Firebase App Check (Play Integrity / App Attest) + bütçe uyarıları (Firestore'da sert harcama tavanı yoktur).
 * **Bildirimler:** FCM (iOS'ta APNs anahtarı ile). Planlar ve "yeni eser eklendi" için.
@@ -181,11 +181,19 @@ Auth (≤50k MAU) ve Hosting ücretsiz katmanda. Ek sabit giderler: Apple Develo
 
 ## 10. Gelir Modeli
 
-* **Ücretsiz:** Sınırsız kişisel raf ve eser, **1 paylaşılan raf**, temel karar çarkı, Auto Backup + JSON dışa aktarma. **Davet edilen kişi her zaman ücretsiz katılır.**
-* **Ourshelf+:** Sınırsız paylaşılan raf, eşleşme modu, çark filtreleri, akıllı listeler, filigransız paylaşım kartları, widget'lar, Drive yedeği, özel ikon/temalar.
-* **Fiyat:** Aylık 1,99 $ · Yıllık 14,99 $ · Ömür boyu 29,99 $ (bölgesel fiyatlandırma). Reklam yok.
+**İlke:** Cihazda çalışan her şey **ücretsiz ve sınırsız**. Yalnızca bizim sunucumuzu kullanan **paylaşım özellikleri** çok ucuz bir abonelikle gelir. Ücretsiz kullanıcının bize maliyeti ~0; sunucu maliyeti yalnızca paylaşımı kullananlarda oluşur ve abonelik bunu fazlasıyla karşılar.
 
----
+| Ücretsiz (herkes, sınırsız) | Ourshelf+ (abonelik) |
+|---|---|
+| Kişisel raflar, tüm medya türleri, arama, barkod, paylaşım menüsünden ekleme | **Paylaşılan raf kurmak** (sınırsız) |
+| Karar çarkı + tüm filtreleri | Davet, "ben de varım" oyları, aktivite akışı |
+| Günlük + paylaşım kartı (küçük "Ourshelf" imzası herkeste — marka, kilit değil) | Ortak karar çarkı, planlar + bildirimler |
+| Akıllı listeler, widget'lar, temalar, alternatif ikonlar | Eşleşme modu, raf vitrini (herkese açık bağlantı) |
+| **Kendi Google Drive / iCloud hesabına yedek** (bize maliyeti yok) | Cihazlar arası senkronizasyon (bizim sunucumuz üzerinden) |
+
+* **Davet edilen herkes ücretsiz katılır** ve paylaşılan rafı tam kullanır; bir abonelik bütün grubu kapsar (çiftlerde yalnızca biri öder).
+* **Fiyat:** Aylık **0,99 $** · Yıllık **7,99 $**. Bölgesel fiyatlandırma (TR vb.) mağaza üzerinden. Sunucu maliyeti sürekli olduğu için ömür boyu paket yok. Reklam yok.
+* **Zorlama sunucuda:** Abonelik durumu RevenueCat → (resmi Firebase eklentisi) → Firestore `users/{uid}.plus`. Güvenlik kuralları paylaşılan raf **oluşturmayı** yalnızca `plus == true` kullanıcılara izin verir; istemci bu alanı yazamaz. Böylece değiştirilmiş bir uygulama da kilidi aşamaz.
 
 ## 11. Yol Haritası
 
@@ -202,13 +210,22 @@ Auth (≤50k MAU) ve Hosting ücretsiz katmanda. Ek sabit giderler: Apple Develo
     ISBN barkod okuyucu (Android: CameraX + ML Kit, iOS: AVFoundation), Android paylaşım hedefi (IMDb/TMDB/ISBN/serbest metin).
   * Arama kalitesi: IGDB popülerlik sıralaması, ana hikâye süresi, OpenLibrary tekrar birleştirme, tür normalleştirme.
   * *Ertelendi:* iOS Share Extension (ayrı Swift hedefi gerektirir) — Faz C/D'de.
-* **Faz C — "Bizim Raf":** Firebase (Auth, Firestore, FCM, App Check, Hosting), paylaşılan raflar, davet, oylar, aktivite, ortak çark, planlar + bildirimler, birlikte bitti, onboarding'in yenilenmesi, "verimi sil".
-* **Faz D — Yayın:** RevenueCat + paywall, gizlilik politikası (KVKK/GDPR), Data Safety / App Privacy formları, TMDB ticari şartları, R8, Baseline Profiles, mağaza görselleri, kapalı test (Play: 12 test kullanıcısı/14 gün), TestFlight → **Android + iOS ilk yayın**.
-* **Faz E — Büyüme:** Eşleşme modu, raf vitrini + kopyalama, ortak özet, widget'lar (Glance + WidgetKit), Drive/iCloud yedeği, akıllı listeler, temalar.
+* **Faz C — "Bizim Raf":**
+  * Firebase (anonim Auth, Firestore) — yapılandırma `local.properties`'ten koda üretilir (google-services.json / plist gerekmez).
+  * Firestore veri modeli + **güvenlik kuralları** (üyelik, davet, `plus` zorlaması) + Firebase Emulator ile kural testleri.
+  * Paylaşılan raf oluşturma, davet bağlantısı, katılma, birlikte ekleme/çıkarma, "ben de varım" oyları, aktivite akışı, ortak karar çarkı, birlikte bitti.
+  * Planlar + bildirimler (FCM), App Check, web'den katılım sayfası (Hosting), "verimi sil" — Faz C'nin ikinci yarısı.
+* **Faz D — Yayın:** RevenueCat + paywall (yalnızca paylaşım özellikleri) + Firebase eklentisiyle sunucu tarafı abonelik, Google / Apple hesap bağlama, iOS Share Extension, gizlilik politikası (KVKK/GDPR), Data Safety / App Privacy formları, TMDB ticari şartları, R8, Baseline Profiles, mağaza görselleri, kapalı test (Play: 12 test kullanıcısı/14 gün), TestFlight → **Android + iOS ilk yayın**.
+* **Faz E — Büyüme:** Eşleşme modu, raf vitrini + kopyalama, ortak özet, widget'lar (Glance + WidgetKit), Drive/iCloud yedeği, akıllı listeler, temalar (yerel olanlar ücretsiz).
 
 ---
 
 ## 12. Revizyon Notları
+
+**Revizyon 4 (2026-11-19)**
+1. Gelir modeli: tüm yerel özellikler ücretsiz ve sınırsız; abonelik yalnızca sunucu kullanan paylaşım özellikleri için (0,99 $/ay, 7,99 $/yıl). Kurmak ücretli, katılmak ücretsiz. Drive/iCloud yedeği ücretsiz.
+2. Abonelik sunucu tarafında zorlanır (RevenueCat → Firestore, güvenlik kuralları).
+3. Kimlik: anonim hesap + görünen ad ile başlar; Google/Apple bağlama Faz D'de.
 
 **Revizyon 3 (2026-11-18)**
 1. Ad: Unwind → **Ourshelf**; slogan ve mağaza metinleri eklendi. "Unwind" Play Store'da kalabalıktı (meditasyon uygulamaları).

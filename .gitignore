@@ -22,3 +22,8 @@ xcuserdata/
 
 # JVM çökme günlükleri
 hs_err_pid*.log
+
+# Firebase yerel bağımlılıkları ve emülatör günlükleri
+node_modules/
+firebase-debug.log
+firestore-debug.log
