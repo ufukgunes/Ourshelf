@@ -1,0 +1,18 @@
+*.iml
+.gradle/
+.kotlin/
+/local.properties
+/.idea/
+.DS_Store
+build/
+/captures/
+.externalNativeBuild/
+.cxx/
+*.keystore
+*.jks
+
+# iOS: Xcode projesi XcodeGen ile üretilir
+iosApp/*.xcodeproj
+iosApp/*.xcworkspace
+xcuserdata/
+*.xcuserstate

@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # İsteğe bağlı API anahtarları (Settings → Secrets). Yoksa ilgili türler örnek veriyle çalışır.
+  TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+  IGDB_PROXY_URL: ${{ secrets.IGDB_PROXY_URL }}
+  IGDB_PROXY_KEY: ${{ secrets.IGDB_PROXY_KEY }}
+
+jobs:
+  android:
+    name: Android — test + APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew
+      - name: Unit tests + debug APK
+        run: ./gradlew :composeApp:testDebugUnitTest :composeApp:assembleDebug --stacktrace
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-test-reports
+          path: composeApp/build/reports/tests
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ourshelf-debug-apk
+          path: composeApp/build/outputs/apk/debug/*.apk
+
+  ios:
+    name: iOS — test + simulator screenshot
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+      - run: chmod +x gradlew
+
+      - name: Common tests on iOS simulator
+        run: ./gradlew :composeApp:iosSimulatorArm64Test --stacktrace
+
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen
+          cd iosApp && xcodegen generate
+
+      - name: Pick a simulator
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in d.items() if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl boot "$UDID" || true
+
+      - name: Build app for simulator
+        run: |
+          xcodebuild -project iosApp/Ourshelf.xcodeproj -scheme Ourshelf -configuration Debug \
+            -sdk iphonesimulator -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO build | tail -50
+
+      - name: Launch and screenshot
+        run: |
+          APP=$(find build/ios/Build/Products -name "Ourshelf.app" -maxdepth 3 | head -1)
+          xcrun simctl install "${{ steps.sim.outputs.udid }}" "$APP"
+          xcrun simctl launch "${{ steps.sim.outputs.udid }}" com.ourshelf.app
+          sleep 20
+          mkdir -p screenshots
+          xcrun simctl io "${{ steps.sim.outputs.udid }}" screenshot screenshots/ios-launch.png
+          # Uygulama çöktüyse logu kaydet.
+          xcrun simctl spawn "${{ steps.sim.outputs.udid }}" log show --last 2m --predicate 'process == "Ourshelf"' > screenshots/ios-log.txt || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-screenshots
+          path: screenshots

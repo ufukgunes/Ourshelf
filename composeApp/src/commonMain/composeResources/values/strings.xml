@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ourshelf</string>
+
+    <!-- Navigation -->
+    <string name="nav_lounge">Lounge</string>
+    <string name="nav_search">Search</string>
+    <string name="action_back">Back</string>
+
+    <!-- Media types -->
+    <string name="type_movie">Movie</string>
+    <string name="type_tv_show">TV Show</string>
+    <string name="type_book">Book</string>
+    <string name="type_game">Game</string>
+    <string name="type_podcast">Podcast</string>
+    <string name="type_album">Album</string>
+    <string name="type_all">All</string>
+
+    <!-- Statuses -->
+    <string name="status_backlog">Backlog</string>
+    <string name="status_in_progress">In progress</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_abandoned">Abandoned</string>
+
+    <!-- Lengths -->
+    <plurals name="length_minutes">
+        <item quantity="one">%1$d min</item>
+        <item quantity="other">%1$d min</item>
+    </plurals>
+    <plurals name="length_pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="length_hours">
+        <item quantity="one">~%1$d hour</item>
+        <item quantity="other">~%1$d hours</item>
+    </plurals>
+    <plurals name="length_episodes">
+        <item quantity="one">%1$d episode</item>
+        <item quantity="other">%1$d episodes</item>
+    </plurals>
+    <plurals name="length_tracks">
+        <item quantity="one">%1$d track</item>
+        <item quantity="other">%1$d tracks</item>
+    </plurals>
+    <plurals name="seasons">
+        <item quantity="one">%1$d season</item>
+        <item quantity="other">%1$d seasons</item>
+    </plurals>
+
+    <!-- Lounge -->
+    <string name="lounge_currently_unwinding">Currently Unwinding</string>
+    <string name="lounge_backlog">Up Next</string>
+    <string name="lounge_completed">Recently Unwound</string>
+    <string name="lounge_shelves">Your Shelves</string>
+    <string name="lounge_new_shelf">New shelf</string>
+    <string name="lounge_empty_title">Your shelf is empty</string>
+    <string name="lounge_empty_body">Add the movies, shows, books and games you want to enjoy in your downtime.</string>
+    <string name="lounge_empty_action">Add your first piece</string>
+    <string name="lounge_no_shelves">Group your picks into shelves like “Rainy weekend movies” or “PS5 up next”.</string>
+    <string name="lounge_shelf_empty">Nothing here yet. Add items from their detail page.</string>
+    <string name="lounge_add">Quick add</string>
+
+    <!-- Shelf dialog -->
+    <string name="shelf_dialog_title">New shelf</string>
+    <string name="shelf_dialog_rename_title">Edit shelf</string>
+    <string name="shelf_name_label">Name</string>
+    <string name="shelf_name_hint">Rainy weekend movies</string>
+    <string name="shelf_emoji_label">Emoji</string>
+    <string name="shelf_delete">Delete shelf</string>
+    <string name="action_create">Create</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_undo">Undo</string>
+
+    <!-- Search -->
+    <string name="search_hint">Movies, shows, books, games…</string>
+    <string name="search_clear">Clear</string>
+    <string name="search_in_library">In your library</string>
+    <string name="search_results_for">%1$s results</string>
+    <string name="search_idle_title">What are you in the mood for?</string>
+    <string name="search_idle_body">Search across movies, shows, books, games, albums and podcasts at once.</string>
+    <string name="search_no_results">No results for “%1$s”</string>
+    <string name="search_error">Couldn’t reach %1$s. Check your connection.</string>
+    <string name="search_retry">Retry</string>
+    <string name="search_demo_hint">Demo data: %1$s</string>
+    <string name="search_add">Add to backlog</string>
+    <string name="search_added">Added</string>
+    <string name="search_added_snackbar">“%1$s” added to your backlog</string>
+    <string name="search_open">Open</string>
+    <string name="search_sheet_backlog">Add to backlog</string>
+    <string name="search_sheet_in_progress">I’m on it</string>
+    <string name="search_sheet_completed">Already done</string>
+
+    <!-- Detail -->
+    <string name="detail_status">Status</string>
+    <string name="detail_rating">Your rating</string>
+    <string name="detail_rating_clear">Clear rating</string>
+    <string name="detail_note">Memory note</string>
+    <string name="detail_note_hint">Watched on a Friday night, the soundtrack was amazing…</string>
+    <string name="detail_progress">Progress</string>
+    <string name="detail_progress_of">%1$d / %2$d</string>
+    <string name="detail_progress_label">Current value</string>
+    <string name="detail_overview">Overview</string>
+    <string name="detail_streaming">Streaming on</string>
+    <string name="detail_platforms">Platforms</string>
+    <string name="detail_shelves">Shelves</string>
+    <string name="detail_no_shelves">Create a shelf on the Lounge screen to organise items.</string>
+    <string name="detail_pin">Pin to Lounge</string>
+    <string name="detail_unpin">Unpin</string>
+    <string name="detail_delete">Remove from library</string>
+    <string name="detail_delete_confirm_title">Remove “%1$s”?</string>
+    <string name="detail_delete_confirm_body">Your rating and note will be removed too.</string>
+    <string name="detail_deleted">Removed from library</string>
+    <string name="detail_not_found">This item is no longer in your library.</string>
+    <string name="detail_added_on">Added %1$s</string>
+    <string name="detail_completed_on">Completed %1$s</string>
+    <string name="detail_open_source">View source</string>
+
+    <!-- Finisher -->
+    <string name="detail_hold_to_complete">Hold to mark as done</string>
+    <string name="finisher_title">That’s a wrap! 🎉</string>
+    <string name="finisher_body">How was it? A rating and a line to remember it by.</string>
+    <string name="finisher_done">Done</string>
+    <string name="completed_snackbar">Marked as completed</string>
+
+    <!-- Shelves -->
+    <string name="shelf_manage">Manage shelves</string>
+    <string name="shelf_open">Open shelf %1$s</string>
+    <string name="shelf_reorder_hint">Drag the handles to reorder.</string>
+    <string name="shelf_remove_item">Remove from shelf</string>
+    <string name="shelf_drag_handle">Drag to reorder</string>
+    <string name="shelf_move_up">Move up</string>
+    <string name="shelf_move_down">Move down</string>
+    <string name="shelf_not_found">This shelf no longer exists.</string>
+    <plurals name="shelf_item_count">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_haptics">Haptic feedback</string>
+    <string name="settings_haptics_desc">Vibrations for the finisher stamp and the roulette.</string>
+    <string name="settings_motion">Motion effects</string>
+    <string name="settings_motion_desc">3D poster tilt, breathing ambient light and cover-flow shelves.</string>
+    <string name="settings_motion_system_off">Animations are turned off in your system settings.</string>
+    <string name="settings_sources">Data sources</string>
+    <string name="attribution_sources">Movies &amp; TV: TMDB · Books: Open Library · Games: IGDB · Music &amp; podcasts: Apple iTunes</string>
+    <string name="attribution_justwatch">Streaming availability is provided by JustWatch.</string>
+
+    <!-- Onboarding -->
+    <string name="onb_1_title">All your downtime, on one shelf</string>
+    <string name="onb_1_body">Movies, shows, books, games, albums and podcasts — together, offline and private on your device.</string>
+    <string name="onb_2_title">Tilt your phone</string>
+    <string name="onb_2_body">Covers catch the light like real collectible cards. No sensor? Drag the cover with your finger.</string>
+    <string name="onb_3_title">Stamp it when you’re done</string>
+    <string name="onb_3_body">Hold to complete, rate it and leave a one-line memory.</string>
+    <string name="onb_next">Next</string>
+    <string name="onb_start">Let’s unwind</string>
+    <string name="onb_skip">Skip</string>
+
+    <!-- Attribution -->
+    <string name="attribution_tmdb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
+</resources>

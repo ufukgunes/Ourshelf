@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Geçici ikon: üst üste duran üç poster (raf). Faz 5'te gerçek ikonla değiştirilecek. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FF6E5BA8"
+        android:pathData="M34,38h20a3,3 0 0,1 3,3v30a3,3 0 0,1 -3,3h-20a3,3 0 0,1 -3,-3v-30a3,3 0 0,1 3,-3z" />
+    <path
+        android:fillColor="#FFE5A93C"
+        android:pathData="M54,34h20a3,3 0 0,1 3,3v34a3,3 0 0,1 -3,3h-20a3,3 0 0,1 -3,-3v-34a3,3 0 0,1 3,-3z" />
+    <path
+        android:fillColor="#FFF4EDE4"
+        android:pathData="M28,76h52v3h-52z" />
+</vector>

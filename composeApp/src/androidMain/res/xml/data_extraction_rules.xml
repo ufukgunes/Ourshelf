@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ için Auto Backup ve cihaz transferi kuralları. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="posters/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="posters/" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,6 @@
+# Tüm metin dosyaları repoda LF; CI (Linux/macOS) betikleri çalıştırabilsin.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.jar binary
+*.png binary
+*.webp binary

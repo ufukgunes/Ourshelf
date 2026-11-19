@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_lounge">Lounge</string>
+    <string name="nav_search">Ara</string>
+    <string name="action_back">Geri</string>
+
+    <string name="type_movie">Film</string>
+    <string name="type_tv_show">Dizi</string>
+    <string name="type_book">Kitap</string>
+    <string name="type_game">Oyun</string>
+    <string name="type_podcast">Podcast</string>
+    <string name="type_album">Albüm</string>
+    <string name="type_all">Tümü</string>
+
+    <string name="status_backlog">Sırada</string>
+    <string name="status_in_progress">Devam ediyor</string>
+    <string name="status_completed">Tamamlandı</string>
+    <string name="status_abandoned">Bırakıldı</string>
+
+    <plurals name="length_minutes">
+        <item quantity="one">%1$d dk</item>
+        <item quantity="other">%1$d dk</item>
+    </plurals>
+    <plurals name="length_pages">
+        <item quantity="one">%1$d sayfa</item>
+        <item quantity="other">%1$d sayfa</item>
+    </plurals>
+    <plurals name="length_hours">
+        <item quantity="one">~%1$d saat</item>
+        <item quantity="other">~%1$d saat</item>
+    </plurals>
+    <plurals name="length_episodes">
+        <item quantity="one">%1$d bölüm</item>
+        <item quantity="other">%1$d bölüm</item>
+    </plurals>
+    <plurals name="length_tracks">
+        <item quantity="one">%1$d parça</item>
+        <item quantity="other">%1$d parça</item>
+    </plurals>
+    <plurals name="seasons">
+        <item quantity="one">%1$d sezon</item>
+        <item quantity="other">%1$d sezon</item>
+    </plurals>
+
+    <string name="lounge_currently_unwinding">Şu An Tükettiklerim</string>
+    <string name="lounge_backlog">Sıradakiler</string>
+    <string name="lounge_completed">Son Bitirdiklerim</string>
+    <string name="lounge_shelves">Rafların</string>
+    <string name="lounge_new_shelf">Yeni raf</string>
+    <string name="lounge_empty_title">Rafın henüz boş</string>
+    <string name="lounge_empty_body">Boş zamanında keyifle tüketeceğin filmleri, dizileri, kitapları ve oyunları ekle.</string>
+    <string name="lounge_empty_action">İlk eserini ekle</string>
+    <string name="lounge_no_shelves">Seçtiklerini “Yağmurlu hafta sonu filmleri” ya da “PS5 sıradakiler” gibi raflarda topla.</string>
+    <string name="lounge_shelf_empty">Burası henüz boş. Eserleri detay sayfasından rafa ekleyebilirsin.</string>
+    <string name="lounge_add">Hızlı ekle</string>
+
+    <string name="shelf_dialog_title">Yeni raf</string>
+    <string name="shelf_dialog_rename_title">Rafı düzenle</string>
+    <string name="shelf_name_label">Ad</string>
+    <string name="shelf_name_hint">Yağmurlu hafta sonu filmleri</string>
+    <string name="shelf_emoji_label">Emoji</string>
+    <string name="shelf_delete">Rafı sil</string>
+    <string name="action_create">Oluştur</string>
+    <string name="action_save">Kaydet</string>
+    <string name="action_cancel">Vazgeç</string>
+    <string name="action_delete">Sil</string>
+    <string name="action_undo">Geri al</string>
+
+    <string name="search_hint">Film, dizi, kitap, oyun…</string>
+    <string name="search_clear">Temizle</string>
+    <string name="search_in_library">Kütüphanende</string>
+    <string name="search_results_for">%1$s sonuçları</string>
+    <string name="search_idle_title">Bu akşam canın ne istiyor?</string>
+    <string name="search_idle_body">Film, dizi, kitap, oyun, albüm ve podcast’leri tek seferde ara.</string>
+    <string name="search_no_results">“%1$s” için sonuç yok</string>
+    <string name="search_error">%1$s ulaşılamadı. Bağlantını kontrol et.</string>
+    <string name="search_retry">Tekrar dene</string>
+    <string name="search_demo_hint">Örnek veri: %1$s</string>
+    <string name="search_add">Listeye ekle</string>
+    <string name="search_added">Eklendi</string>
+    <string name="search_added_snackbar">“%1$s” listene eklendi</string>
+    <string name="search_open">Aç</string>
+    <string name="search_sheet_backlog">Listeye ekle</string>
+    <string name="search_sheet_in_progress">Şu an tüketiyorum</string>
+    <string name="search_sheet_completed">Zaten bitirdim</string>
+
+    <string name="detail_status">Durum</string>
+    <string name="detail_rating">Puanın</string>
+    <string name="detail_rating_clear">Puanı kaldır</string>
+    <string name="detail_note">Anı notu</string>
+    <string name="detail_note_hint">Cuma akşamı izlendi, müzikleri harikaydı…</string>
+    <string name="detail_progress">İlerleme</string>
+    <string name="detail_progress_of">%1$d / %2$d</string>
+    <string name="detail_progress_label">Mevcut değer</string>
+    <string name="detail_overview">Özet</string>
+    <string name="detail_streaming">Yayında</string>
+    <string name="detail_platforms">Platformlar</string>
+    <string name="detail_shelves">Raflar</string>
+    <string name="detail_no_shelves">Eserleri düzenlemek için Lounge ekranından bir raf oluştur.</string>
+    <string name="detail_pin">Lounge’a sabitle</string>
+    <string name="detail_unpin">Sabitlemeyi kaldır</string>
+    <string name="detail_delete">Kütüphaneden kaldır</string>
+    <string name="detail_delete_confirm_title">“%1$s” kaldırılsın mı?</string>
+    <string name="detail_delete_confirm_body">Puanın ve notun da silinecek.</string>
+    <string name="detail_deleted">Kütüphaneden kaldırıldı</string>
+    <string name="detail_not_found">Bu eser artık kütüphanende değil.</string>
+    <string name="detail_added_on">Eklendi: %1$s</string>
+    <string name="detail_completed_on">Tamamlandı: %1$s</string>
+    <string name="detail_open_source">Kaynağı aç</string>
+
+    <string name="detail_hold_to_complete">Bitirdin mi? Basılı tut</string>
+    <string name="finisher_title">Bitti! 🎉</string>
+    <string name="finisher_body">Nasıldı? Bir puan ve hatırlamak için tek bir cümle.</string>
+    <string name="finisher_done">Tamam</string>
+    <string name="completed_snackbar">Tamamlandı olarak işaretlendi</string>
+
+    <string name="shelf_manage">Rafları düzenle</string>
+    <string name="shelf_open">%1$s rafını aç</string>
+    <string name="shelf_reorder_hint">Sıralamak için tutamaçları sürükle.</string>
+    <string name="shelf_remove_item">Raftan çıkar</string>
+    <string name="shelf_drag_handle">Sıralamak için sürükle</string>
+    <string name="shelf_move_up">Yukarı taşı</string>
+    <string name="shelf_move_down">Aşağı taşı</string>
+    <string name="shelf_not_found">Bu raf artık yok.</string>
+    <plurals name="shelf_item_count">
+        <item quantity="one">%1$d eser</item>
+        <item quantity="other">%1$d eser</item>
+    </plurals>
+
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_haptics">Dokunsal geri bildirim</string>
+    <string name="settings_haptics_desc">Tamamlama mührü ve karar çarkı için titreşimler.</string>
+    <string name="settings_motion">Hareket efektleri</string>
+    <string name="settings_motion_desc">3B poster eğimi, nefes alan ambiyans ışığı ve cover-flow raflar.</string>
+    <string name="settings_motion_system_off">Animasyonlar sistem ayarlarında kapalı.</string>
+    <string name="settings_sources">Veri kaynakları</string>
+    <string name="attribution_sources">Film ve dizi: TMDB · Kitap: Open Library · Oyun: IGDB · Müzik ve podcast: Apple iTunes</string>
+    <string name="attribution_justwatch">Yayın platformu bilgileri JustWatch tarafından sağlanır.</string>
+
+    <string name="onb_1_title">Tüm boş zamanın tek rafta</string>
+    <string name="onb_1_body">Film, dizi, kitap, oyun, albüm ve podcast’ler bir arada; çevrimdışı ve tamamen cihazında.</string>
+    <string name="onb_2_title">Telefonunu eğ</string>
+    <string name="onb_2_body">Kapaklar gerçek koleksiyon kartları gibi ışığı yakalar. Sensör yoksa kapağı parmağınla sürükle.</string>
+    <string name="onb_3_title">Bitirince mührünü bas</string>
+    <string name="onb_3_body">Basılı tutarak tamamla, puanla ve tek cümlelik bir anı bırak.</string>
+    <string name="onb_next">İleri</string>
+    <string name="onb_start">Başlayalım</string>
+    <string name="onb_skip">Geç</string>
+
+    <string name="attribution_tmdb">Bu ürün TMDB API’sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
+</resources>
