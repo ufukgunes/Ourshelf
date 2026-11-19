@@ -24,6 +24,7 @@ proxy/                 IGDB için Cloudflare Worker
 Gereken: JDK 17+ ve Android SDK (compileSdk 36).
 
 ```sh
+./gradlew :composeApp:compileCommonMainKotlinMetadata  # ortak kodda JVM'e özgü API kalmadı mı? (iOS'ta patlamadan yakalar)
 ./gradlew :composeApp:testDebugUnitTest   # testler
 ./gradlew :composeApp:assembleDebug       # APK → composeApp/build/outputs/apk/debug/
 ./gradlew :composeApp:installDebug        # bağlı Android cihaza kur

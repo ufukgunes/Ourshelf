@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.round
 import kotlin.time.Clock
 import kotlin.uuid.Uuid
 
@@ -132,7 +133,7 @@ class MediaRepository(
 
     /** Yarım yıldız adımlarıyla 0.5–5.0; null puanı kaldırır. */
     suspend fun setRating(id: String, rating: Float?) = mutate(id) {
-        it.copy(userRating = rating?.let { r -> (Math.round(r * 2) / 2f).coerceIn(0.5f, 5f) })
+        it.copy(userRating = rating?.let { r -> (round(r * 2) / 2f).coerceIn(0.5f, 5f) })
     }
 
     suspend fun setNote(id: String, note: String?) = mutate(id) {
