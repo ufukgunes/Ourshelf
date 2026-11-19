@@ -202,6 +202,13 @@
     <string name="share_card_year">My year on Ourshelf</string>
     <string name="share_card_all">My shelf on Ourshelf</string>
 
+    <!-- ISBN scan -->
+    <string name="scan_title">Scan a book</string>
+    <string name="scan_hint">Line up the barcode on the back cover</string>
+    <string name="scan_not_a_book">That barcode isn’t a book ISBN — try the one on the back cover</string>
+    <string name="scan_permission_denied">Camera access is needed to scan barcodes. You can allow it in Settings.</string>
+    <string name="scan_open">Scan ISBN barcode</string>
+
     <!-- Attribution -->
     <string name="attribution_tmdb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
 </resources>

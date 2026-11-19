@@ -67,6 +67,7 @@ import org.jetbrains.compose.resources.getString
 import org.koin.compose.koinInject
 import com.ourshelf.app.ui.theme.OurshelfTheme
 import com.ourshelf.app.ui.onboarding.OnboardingScreen
+import com.ourshelf.app.ui.scan.IsbnScanScreen
 import com.ourshelf.app.ui.settings.SettingsSheet
 import com.ourshelf.app.ui.logbook.LogbookRoute as LogbookScreenRoute
 import com.ourshelf.app.ui.roulette.RouletteRoute as RouletteScreenRoute
@@ -86,6 +87,12 @@ data object SearchRoute
 
 @Serializable
 data object LogbookRoute
+
+@Serializable
+data object ScanRoute
+
+/** Tarayıcıdan arama ekranına dönen ISBN'in SavedStateHandle anahtarı. */
+private const val SCANNED_ISBN = "scanned_isbn"
 
 /** [sharedKey]: posterin hangi raftan açıldığı; shared element geçişi bu anahtarla eşleşir. */
 @Serializable
@@ -228,9 +235,15 @@ private fun UnwindNavHost(appViewModel: AppViewModel, onOpenSettings: () -> Unit
                             )
                         }
                     }
-                    composable<SearchRoute> {
+                    composable<SearchRoute> { entry ->
+                        val scannedIsbn by entry.savedStateHandle
+                            .getStateFlow<String?>(SCANNED_ISBN, null)
+                            .collectAsStateWithLifecycle()
                         WithVisibilityScope {
                             SearchScreenRoute(
+                                onScanIsbn = { navController.navigate(ScanRoute) },
+                                scannedIsbn = scannedIsbn,
+                                onScannedIsbnConsumed = { entry.savedStateHandle[SCANNED_ISBN] = null },
                                 onOpenItem = openItem,
                                 onItemAdded = { id, title ->
                                     showSnackbar(
@@ -242,6 +255,15 @@ private fun UnwindNavHost(appViewModel: AppViewModel, onOpenSettings: () -> Unit
                                 },
                             )
                         }
+                    }
+                    composable<ScanRoute> {
+                        IsbnScanScreen(
+                            onIsbn = { isbn ->
+                                navController.previousBackStackEntry?.savedStateHandle?.set(SCANNED_ISBN, isbn)
+                                navController.popBackStack()
+                            },
+                            onClose = { navController.popBackStack() },
+                        )
                     }
                     composable<LogbookRoute> {
                         WithVisibilityScope { LogbookScreenRoute(onOpenItem = openItem) }

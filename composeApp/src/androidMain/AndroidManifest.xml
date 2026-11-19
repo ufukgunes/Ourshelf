@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Finisher Stamp'ın giderek güçlenen titreşimi için (normal izin, kullanıcıya sorulmaz). -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- ISBN barkod okuyucu. Kamerası olmayan cihazlarda uygulama yine kurulabilir. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:name=".OurshelfApplication"

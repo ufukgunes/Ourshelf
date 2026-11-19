@@ -122,6 +122,11 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
+            // ISBN barkod okuyucu (cihaz içi, ücretsiz)
+            implementation(libs.camera.camera2)
+            implementation(libs.camera.lifecycle)
+            implementation(libs.camera.view)
+            implementation(libs.mlkit.barcode)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

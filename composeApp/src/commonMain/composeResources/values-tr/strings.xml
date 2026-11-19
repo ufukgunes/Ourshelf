@@ -186,5 +186,11 @@
     <string name="share_card_year">Ourshelf’te bu yılım</string>
     <string name="share_card_all">Ourshelf’teki rafım</string>
 
+    <string name="scan_title">Kitap okut</string>
+    <string name="scan_hint">Arka kapaktaki barkodu çerçeveye hizala</string>
+    <string name="scan_not_a_book">Bu barkod bir kitap ISBN’i değil; arka kapaktakini dene</string>
+    <string name="scan_permission_denied">Barkod okutmak için kamera izni gerekiyor. Ayarlardan izin verebilirsin.</string>
+    <string name="scan_open">ISBN barkodu okut</string>
+
     <string name="attribution_tmdb">Bu ürün TMDB API’sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
 </resources>

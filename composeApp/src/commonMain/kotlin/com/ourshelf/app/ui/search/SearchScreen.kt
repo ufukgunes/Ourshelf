@@ -1,6 +1,7 @@
 package com.ourshelf.app.ui.search
 
 import com.ourshelf.app.resources.Res
+import com.ourshelf.app.resources.scan_open
 import com.ourshelf.app.resources.search_add
 import com.ourshelf.app.resources.search_added
 import com.ourshelf.app.resources.search_clear
@@ -41,6 +42,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
@@ -87,9 +89,18 @@ import com.ourshelf.app.ui.components.labelRes
 fun SearchRoute(
     onOpenItem: (itemId: String, sharedKey: String?) -> Unit,
     onItemAdded: (itemId: String, title: String) -> Unit,
+    onScanIsbn: () -> Unit = {},
+    scannedIsbn: String? = null,
+    onScannedIsbnConsumed: () -> Unit = {},
     viewModel: SearchViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    LaunchedEffect(scannedIsbn) {
+        if (scannedIsbn != null) {
+            viewModel.searchIsbn(scannedIsbn)
+            onScannedIsbnConsumed()
+        }
+    }
     LaunchedEffect(viewModel) {
         viewModel.eventFlow.collect { event ->
             when (event) {
@@ -104,6 +115,8 @@ fun SearchRoute(
         onRetry = viewModel::retry,
         onAdd = viewModel::add,
         onOpenItem = onOpenItem,
+        onScanIsbn = onScanIsbn,
+        onPendingIsbnHandled = viewModel::clearPendingIsbn,
     )
 }
 
@@ -116,8 +129,19 @@ fun SearchScreen(
     onRetry: () -> Unit,
     onAdd: (MediaSearchResult, MediaStatus) -> Unit,
     onOpenItem: (itemId: String, sharedKey: String?) -> Unit,
+    onScanIsbn: () -> Unit = {},
+    onPendingIsbnHandled: () -> Unit = {},
 ) {
     var preview by remember { mutableStateOf<MediaSearchResult?>(null) }
+
+    // Barkoddan okunan ISBN'in sonucu gelince ilk kitabın önizlemesini aç.
+    LaunchedEffect(state.pendingIsbn, state.remote) {
+        val isbn = state.pendingIsbn ?: return@LaunchedEffect
+        val loaded = state.remote as? RemoteResults.Loaded ?: return@LaunchedEffect
+        if (loaded.query != isbn) return@LaunchedEffect
+        loaded.outcomes.firstOrNull { it.type == MediaType.BOOK }?.results?.firstOrNull()?.let { preview = it }
+        onPendingIsbnHandled()
+    }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -132,6 +156,7 @@ fun SearchScreen(
                     query = state.query,
                     onQueryChange = onQueryChange,
                     onSearch = { focusManager.clearFocus() },
+                    onScanIsbn = onScanIsbn,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
@@ -249,6 +274,7 @@ private fun SearchField(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
+    onScanIsbn: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TextField(
@@ -261,6 +287,10 @@ private fun SearchField(
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
                     Icon(Icons.Filled.Close, contentDescription = stringResource(Res.string.search_clear))
+                }
+            } else {
+                IconButton(onClick = onScanIsbn) {
+                    Icon(Icons.Filled.QrCodeScanner, contentDescription = stringResource(Res.string.scan_open))
                 }
             }
         },

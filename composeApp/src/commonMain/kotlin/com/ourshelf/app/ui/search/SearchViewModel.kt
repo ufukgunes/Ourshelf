@@ -33,7 +33,8 @@ typealias SearchFilter = MediaType?
 sealed interface RemoteResults {
     data object Idle : RemoteResults
     data object Loading : RemoteResults
-    data class Loaded(val outcomes: List<TypedSearchOutcome>) : RemoteResults
+    /** [query]: sonuçların ait olduğu sorgu (bekleyen eski sonuçları yenilerinden ayırmak için). */
+    data class Loaded(val query: String, val outcomes: List<TypedSearchOutcome>) : RemoteResults
 }
 
 data class SearchUiState(
@@ -44,6 +45,8 @@ data class SearchUiState(
     /** externalId -> yerel id (zaten kütüphanede olanlar). */
     val savedIds: Map<String, String> = emptyMap(),
     val mockTypes: Set<MediaType> = emptySet(),
+    /** Barkoddan okunan ve sonucu gelince önizlemesi otomatik açılacak ISBN. */
+    val pendingIsbn: String? = null,
 )
 
 sealed interface SearchEvent {
@@ -62,6 +65,7 @@ class SearchViewModel(
         savedStateHandle.get<String>(KEY_FILTER)?.let { runCatching { MediaType.valueOf(it) }.getOrNull() },
     )
     private val retryTick = MutableStateFlow(0)
+    private val pendingIsbn = MutableStateFlow<String?>(null)
 
     private val events = Channel<SearchEvent>(Channel.BUFFERED)
     val eventFlow: Flow<SearchEvent> = events.receiveAsFlow()
@@ -81,7 +85,7 @@ class SearchViewModel(
                     } else {
                         emit(RemoteResults.Loading)
                         val types = f?.let(::listOf) ?: MediaType.entries
-                        emit(RemoteResults.Loaded(searchRepository.search(q, types)))
+                        emit(RemoteResults.Loaded(q, searchRepository.search(q, types)))
                     }
                 }
             }
@@ -101,7 +105,8 @@ class SearchViewModel(
             savedIds = saved,
             mockTypes = searchRepository.mockTypes,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SearchUiState(query = query.value))
+    }.combine(pendingIsbn) { state, isbn -> state.copy(pendingIsbn = isbn) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SearchUiState(query = query.value))
 
     fun onQueryChange(value: String) {
         query.value = value
@@ -111,6 +116,17 @@ class SearchViewModel(
     fun onFilterChange(value: SearchFilter) {
         filter.value = value
         savedStateHandle[KEY_FILTER] = value?.name
+    }
+
+    /** Barkoddan gelen ISBN'i kitap araması olarak başlatır. */
+    fun searchIsbn(isbn: String) {
+        onFilterChange(MediaType.BOOK)
+        onQueryChange(isbn)
+        pendingIsbn.value = isbn
+    }
+
+    fun clearPendingIsbn() {
+        pendingIsbn.value = null
     }
 
     fun retry() {

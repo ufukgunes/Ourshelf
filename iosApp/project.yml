@@ -24,6 +24,7 @@ targets:
         CADisableMinimumFrameDurationOnPhone: true
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         ITSAppUsesNonExemptEncryption: false
+        NSCameraUsageDescription: "Kitapları eklemek için arka kapaktaki ISBN barkodunu okutursun. / Scan a book's ISBN barcode to add it."
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ourshelf.app

@@ -1,5 +1,6 @@
 package com.ourshelf.app.data.remote.openlibrary
 
+import com.ourshelf.app.core.Isbn
 import com.ourshelf.app.core.model.MediaMetadata
 import com.ourshelf.app.core.model.MediaSearchResult
 import com.ourshelf.app.core.model.MediaType
@@ -67,7 +68,13 @@ class OpenLibraryProvider(private val api: OpenLibraryApi) : MediaSearchProvider
 
     override suspend fun search(query: String, type: MediaType, page: Int) = suspendRunCatching {
         if (type != MediaType.BOOK) return@suspendRunCatching emptyList()
-        dedupeWorks(api.search(query, page).docs.map { it.toResult() })
+        // Arama kutusuna yazılan ya da barkoddan okunan ISBN doğrudan ISBN uç noktasıyla aranır.
+        val docs = if (Isbn.looksLikeIsbn(query)) {
+            if (page > 1) emptyList() else api.searchByIsbn(Isbn.normalize(query)).docs
+        } else {
+            api.search(query, page).docs
+        }
+        dedupeWorks(docs.map { it.toResult() })
     }
 
     suspend fun searchByIsbn(isbn: String) = suspendRunCatching {
