@@ -1,0 +1,13 @@
+# Cloudflare Worker yapılandırması — IGDB proxy'si.
+# Yayınlama: proxy/ klasöründe `npx wrangler deploy`
+name = "ourshelf-igdb"
+main = "igdb-worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# Twitch "Ourshelf IGDB" uygulamasının istemci kimliği (gizli değildir, her istekte gönderilir).
+TWITCH_CLIENT_ID = "wrh87yrq6hj9bs0h1cw6nhs67evyaf"
+
+# Gizli değerler buraya YAZILMAZ; `npx wrangler secret put <AD>` ile Cloudflare'e kaydedilir:
+#   TWITCH_CLIENT_SECRET  (zorunlu)
+#   APP_KEY               (isteğe bağlı; uygulamadaki IGDB_PROXY_KEY ile aynı değer)

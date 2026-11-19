@@ -13,7 +13,8 @@ concurrency:
 env:
   # İsteğe bağlı API anahtarları (Settings → Secrets). Yoksa ilgili türler örnek veriyle çalışır.
   TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-  IGDB_PROXY_URL: ${{ secrets.IGDB_PROXY_URL }}
+  # Proxy adresi gizli değildir (uygulamaya gömülür); varsayılan olarak yayındaki Worker kullanılır.
+  IGDB_PROXY_URL: ${{ secrets.IGDB_PROXY_URL || 'https://ourshelf-igdb.ourshelf.workers.dev/' }}
   IGDB_PROXY_KEY: ${{ secrets.IGDB_PROXY_KEY }}
 
 jobs:

@@ -6,22 +6,25 @@ Proxy URL'si ayarlanmazsa uygulama oyunlar için örnek (Mock) veriyle çalış�
 
 ## Kurulum
 
-1. https://dev.twitch.tv/console adresinde bir uygulama oluştur (OAuth Redirect URL: `http://localhost`, kategori: Application Integration). **Client ID** ve **Client Secret**'ı al.
-2. Worker'ı yayınla:
-   ```sh
-   npm create cloudflare@latest ourshelf-igdb -- --type hello-world
-   # Oluşan src/index.js içeriğini proxy/igdb-worker.js ile değiştir
-   cd ourshelf-igdb
-   npx wrangler secret put TWITCH_CLIENT_ID
-   npx wrangler secret put TWITCH_CLIENT_SECRET
-   npx wrangler secret put APP_KEY        # isteğe bağlı
-   npx wrangler deploy
-   ```
-3. Uygulamanın `local.properties` dosyasına ekle:
-   ```properties
-   IGDB_PROXY_URL=https://ourshelf-igdb.<hesabın>.workers.dev/
-   IGDB_PROXY_KEY=<APP_KEY ile aynı değer, ayarladıysan>
-   ```
+Gereken: Node.js, ücretsiz bir Cloudflare hesabı ve **istemci türü "Gizli"** olan bir Twitch uygulaması
+(https://dev.twitch.tv/console → OAuth Redirect URL: `http://localhost`, kategori: Application Integration).
+Twitch istemci kimliği `wrangler.toml` içindedir; parola ise yalnızca Cloudflare'e kaydedilir.
+
+```sh
+cd proxy
+npx wrangler login                              # tarayıcıda Cloudflare girişini onayla
+npx wrangler secret put TWITCH_CLIENT_SECRET    # parolayı yapıştır (ekranda görünmez)
+npx wrangler deploy                             # çıktıdaki https://ourshelf-igdb.<hesap>.workers.dev adresini al
+```
+
+Ardından uygulamanın `local.properties` dosyasına:
+
+```properties
+IGDB_PROXY_URL=https://ourshelf-igdb.<hesabın>.workers.dev/
+```
+
+İsteğe bağlı olarak `npx wrangler secret put APP_KEY` ile bir anahtar belirleyip aynı değeri `IGDB_PROXY_KEY` olarak
+ekleyebilirsin; APK'dan çıkarılabildiği için yalnızca rastgele kötüye kullanımı azaltır.
 
 ## Test
 
