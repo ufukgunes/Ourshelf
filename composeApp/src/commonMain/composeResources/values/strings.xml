@@ -209,6 +209,13 @@
     <string name="scan_permission_denied">Camera access is needed to scan barcodes. You can allow it in Settings.</string>
     <string name="scan_open">Scan ISBN barcode</string>
 
+    <!-- Share intake -->
+    <string name="intake_title">Add to Ourshelf</string>
+    <string name="intake_nothing">Couldn’t find anything for what you shared.</string>
+    <string name="intake_add">Add</string>
+    <string name="intake_added">Added</string>
+    <string name="intake_close">Close</string>
+
     <!-- Attribution -->
     <string name="attribution_tmdb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
 </resources>

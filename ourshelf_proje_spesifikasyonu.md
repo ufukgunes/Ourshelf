@@ -39,7 +39,7 @@ Uygulamanın temel nesnesi **raf**tır. Film, dizi, kitap, oyun, albüm ve podca
 | **İlk yayın** | Kişisel raf, Lounge, arama (Omni-Search), detay | ✅ (Android) |
 | | "WOW" UI: ambiyans ışığı, 3B tactile poster, shared element geçişleri, Finisher Stamp | ✅ (Android) |
 | | Raflar: oluşturma, düzenleme, sürükle-bırak sıralama | ✅ (Android) |
-| | Karar çarkı (Roulette), ISBN barkod okuyucu, Logbook + paylaşım kartı | Faz B |
+| | Karar çarkı (Roulette), ISBN barkod okuyucu, Logbook + paylaşım kartı, paylaşım menüsünden ekleme | ✅ (Android; iOS paylaşım eklentisi bekliyor) |
 | | **Paylaşılan raflar:** davet bağlantısı, üyeler, birlikte ekle/çıkar | Faz C |
 | | **"Ben de varım 👍" oyları** + aktivite akışı | Faz C |
 | | **Ortak karar çarkı** (yalnızca herkesin istediği eserler) | Faz C |
@@ -197,7 +197,11 @@ Auth (≤50k MAU) ve Hosting ücretsiz katmanda. Ek sabit giderler: Apple Develo
   * Testler `commonTest`'e taşınır; Android'de özellik kaybı olmadığı cihazda doğrulanır.
   * Yeniden markalama: ad, paket adı (`com.ourshelf.app`), FIN. mührü, metinler, ikon.
   * git + GitHub deposu; GitHub Actions: Android build/test + iOS build + simülatör ekran görüntüsü.
-* **Faz B — Araçlar:** Karar çarkı, ISBN barkod okuyucu, Logbook + paylaşım kartı, Share Sheet hedefi, OpenLibrary baskı birleştirme, TMDB anahtarı yokken açık uyarı.
+* **Faz B — Araçlar:** ✅ *Tamamlandı (2026-11-19), Android'de cihazda doğrulandı*
+  * Karar çarkı (3B karusel, haptik, "Kısa olsun" + tür filtreleri), Logbook (ay/yıl/tüm zamanlar) + 9:16 paylaşım kartı,
+    ISBN barkod okuyucu (Android: CameraX + ML Kit, iOS: AVFoundation), Android paylaşım hedefi (IMDb/TMDB/ISBN/serbest metin).
+  * Arama kalitesi: IGDB popülerlik sıralaması, ana hikâye süresi, OpenLibrary tekrar birleştirme, tür normalleştirme.
+  * *Ertelendi:* iOS Share Extension (ayrı Swift hedefi gerektirir) — Faz C/D'de.
 * **Faz C — "Bizim Raf":** Firebase (Auth, Firestore, FCM, App Check, Hosting), paylaşılan raflar, davet, oylar, aktivite, ortak çark, planlar + bildirimler, birlikte bitti, onboarding'in yenilenmesi, "verimi sil".
 * **Faz D — Yayın:** RevenueCat + paywall, gizlilik politikası (KVKK/GDPR), Data Safety / App Privacy formları, TMDB ticari şartları, R8, Baseline Profiles, mağaza görselleri, kapalı test (Play: 12 test kullanıcısı/14 gün), TestFlight → **Android + iOS ilk yayın**.
 * **Faz E — Büyüme:** Eşleşme modu, raf vitrini + kopyalama, ortak özet, widget'lar (Glance + WidgetKit), Drive/iCloud yedeği, akıllı listeler, temalar.

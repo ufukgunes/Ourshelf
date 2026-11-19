@@ -192,5 +192,11 @@
     <string name="scan_permission_denied">Barkod okutmak için kamera izni gerekiyor. Ayarlardan izin verebilirsin.</string>
     <string name="scan_open">ISBN barkodu okut</string>
 
+    <string name="intake_title">Ourshelf’e ekle</string>
+    <string name="intake_nothing">Paylaştığın şey için bir eser bulunamadı.</string>
+    <string name="intake_add">Ekle</string>
+    <string name="intake_added">Eklendi</string>
+    <string name="intake_close">Kapat</string>
+
     <string name="attribution_tmdb">Bu ürün TMDB API’sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
 </resources>

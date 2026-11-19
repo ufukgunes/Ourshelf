@@ -31,6 +31,12 @@ class TmdbApi(private val client: HttpClient) {
             parameter("language", language); parameter("append_to_response", "watch/providers")
         }.body()
 
+    /** IMDb kimliğinden (tt…) TMDB kaydını bulur. */
+    suspend fun findByImdbId(imdbId: String, language: String): TmdbFindResponse =
+        client.get("find/$imdbId") {
+            parameter("external_source", "imdb_id"); parameter("language", language)
+        }.body()
+
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val IMAGE_BASE = "https://image.tmdb.org/t/p/"
@@ -62,6 +68,12 @@ data class TmdbTvSummary(
     @SerialName("poster_path") val posterPath: String? = null,
     @SerialName("backdrop_path") val backdropPath: String? = null,
     @SerialName("first_air_date") val firstAirDate: String? = null,
+)
+
+@Serializable
+data class TmdbFindResponse(
+    @SerialName("movie_results") val movieResults: List<TmdbMovieSummary> = emptyList(),
+    @SerialName("tv_results") val tvResults: List<TmdbTvSummary> = emptyList(),
 )
 
 @Serializable

@@ -42,6 +42,11 @@ class TmdbProvider(
         }
     }
 
+    suspend fun findByImdbId(imdbId: String): Result<List<MediaSearchResult>> = suspendRunCatching {
+        val found = api.findByImdbId(imdbId, language)
+        found.movieResults.map { it.toResult() } + found.tvResults.map { it.toResult() }
+    }
+
     companion object {
         fun externalId(type: MediaType, id: Long) =
             "tmdb:${if (type == MediaType.MOVIE) "movie" else "tv"}:$id"
