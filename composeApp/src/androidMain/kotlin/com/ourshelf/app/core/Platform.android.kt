@@ -28,6 +28,12 @@ actual object Platform {
             .withZone(ZoneId.systemDefault())
             .format(instant.toJavaInstant())
 
+    actual fun formatMonthYear(instant: Instant): String =
+        DateTimeFormatter.ofPattern("LLLL yyyy", Locale.getDefault())
+            .withZone(ZoneId.systemDefault())
+            .format(instant.toJavaInstant())
+            .replaceFirstChar { it.titlecase(Locale.getDefault()) }
+
     actual fun logWarning(tag: String, message: String, throwable: Throwable?) {
         Log.w(tag, message, throwable)
     }

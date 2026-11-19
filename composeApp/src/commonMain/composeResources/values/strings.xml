@@ -179,6 +179,29 @@
         <item quantity="other">%1$d candidates</item>
     </plurals>
 
+    <!-- Logbook -->
+    <string name="nav_logbook">Logbook</string>
+    <string name="logbook_title">Logbook</string>
+    <string name="logbook_month">This month</string>
+    <string name="logbook_year">This year</string>
+    <string name="logbook_all">All time</string>
+    <plurals name="logbook_finished">
+        <item quantity="one">%1$d finished</item>
+        <item quantity="other">%1$d finished</item>
+    </plurals>
+    <string name="logbook_hours_watched">hours of film</string>
+    <string name="logbook_episodes">episodes</string>
+    <string name="logbook_pages_read">pages read</string>
+    <string name="logbook_hours_played">hours played</string>
+    <string name="logbook_avg_rating">average rating</string>
+    <string name="logbook_empty_title">Nothing finished yet</string>
+    <string name="logbook_empty_body">Hold “Mark as done” on anything you finish — it shows up here.</string>
+    <string name="logbook_share">Share</string>
+    <string name="logbook_share_card">Share card</string>
+    <string name="share_card_month">My month on Ourshelf</string>
+    <string name="share_card_year">My year on Ourshelf</string>
+    <string name="share_card_all">My shelf on Ourshelf</string>
+
     <!-- Attribution -->
     <string name="attribution_tmdb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
 </resources>

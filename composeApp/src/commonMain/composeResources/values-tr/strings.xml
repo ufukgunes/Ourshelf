@@ -164,5 +164,27 @@
         <item quantity="other">%1$d aday</item>
     </plurals>
 
+    <string name="nav_logbook">Günlük</string>
+    <string name="logbook_title">Günlük</string>
+    <string name="logbook_month">Bu ay</string>
+    <string name="logbook_year">Bu yıl</string>
+    <string name="logbook_all">Tüm zamanlar</string>
+    <plurals name="logbook_finished">
+        <item quantity="one">%1$d eser bitti</item>
+        <item quantity="other">%1$d eser bitti</item>
+    </plurals>
+    <string name="logbook_hours_watched">saat film</string>
+    <string name="logbook_episodes">bölüm dizi</string>
+    <string name="logbook_pages_read">sayfa kitap</string>
+    <string name="logbook_hours_played">saat oyun</string>
+    <string name="logbook_avg_rating">ortalama puan</string>
+    <string name="logbook_empty_title">Henüz bitirdiğin bir şey yok</string>
+    <string name="logbook_empty_body">Bitirdiğin eserlerde “Bitirdin mi?” butonunu basılı tut; burada görünür.</string>
+    <string name="logbook_share">Paylaş</string>
+    <string name="logbook_share_card">Paylaşım kartı</string>
+    <string name="share_card_month">Ourshelf’te bu ayım</string>
+    <string name="share_card_year">Ourshelf’te bu yılım</string>
+    <string name="share_card_all">Ourshelf’teki rafım</string>
+
     <string name="attribution_tmdb">Bu ürün TMDB API’sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
 </resources>

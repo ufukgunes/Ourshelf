@@ -42,6 +42,15 @@ actual object Platform {
         return formatter.stringFromDate(date)
     }
 
+    actual fun formatMonthYear(instant: Instant): String {
+        val formatter = NSDateFormatter().apply {
+            locale = NSLocale.currentLocale
+            setLocalizedDateFormatFromTemplate("LLLLyyyy")
+        }
+        val date = NSDate.dateWithTimeIntervalSince1970(instant.toEpochMilliseconds() / 1000.0)
+        return formatter.stringFromDate(date)
+    }
+
     actual fun logWarning(tag: String, message: String, throwable: Throwable?) {
         NSLog("W/$tag: $message ${throwable?.message.orEmpty()}")
     }

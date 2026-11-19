@@ -1,6 +1,7 @@
 package com.ourshelf.app.ui.navigation
 
 import com.ourshelf.app.resources.Res
+import com.ourshelf.app.resources.nav_logbook
 import com.ourshelf.app.resources.action_undo
 import com.ourshelf.app.resources.completed_snackbar
 import com.ourshelf.app.resources.detail_deleted
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Weekend
 import androidx.compose.material3.Icon
@@ -66,6 +68,7 @@ import org.koin.compose.koinInject
 import com.ourshelf.app.ui.theme.OurshelfTheme
 import com.ourshelf.app.ui.onboarding.OnboardingScreen
 import com.ourshelf.app.ui.settings.SettingsSheet
+import com.ourshelf.app.ui.logbook.LogbookRoute as LogbookScreenRoute
 import com.ourshelf.app.ui.roulette.RouletteRoute as RouletteScreenRoute
 import com.ourshelf.app.ui.shelf.ManageShelvesRoute as ManageShelvesScreenRoute
 import com.ourshelf.app.ui.shelf.ShelfRoute as ShelfScreenRoute
@@ -80,6 +83,9 @@ data object LoungeRoute
 
 @Serializable
 data object SearchRoute
+
+@Serializable
+data object LogbookRoute
 
 /** [sharedKey]: posterin hangi raftan açıldığı; shared element geçişi bu anahtarla eşleşir. */
 @Serializable
@@ -100,6 +106,7 @@ private data class TopLevelDestination(val route: Any, val icon: ImageVector, va
 private val topLevelDestinations = listOf(
     TopLevelDestination(LoungeRoute, Icons.Filled.Weekend, Res.string.nav_lounge),
     TopLevelDestination(SearchRoute, Icons.Filled.Search, Res.string.nav_search),
+    TopLevelDestination(LogbookRoute, Icons.Filled.Insights, Res.string.nav_logbook),
 )
 
 /** Android ve iOS'un ortak giriş noktası. Koin, platform tarafında başlatılmış olmalıdır. */
@@ -235,6 +242,9 @@ private fun UnwindNavHost(appViewModel: AppViewModel, onOpenSettings: () -> Unit
                                 },
                             )
                         }
+                    }
+                    composable<LogbookRoute> {
+                        WithVisibilityScope { LogbookScreenRoute(onOpenItem = openItem) }
                     }
                     composable<DetailRoute> { entry ->
                         WithVisibilityScope {

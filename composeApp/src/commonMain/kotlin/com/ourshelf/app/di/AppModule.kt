@@ -28,6 +28,7 @@ import com.ourshelf.app.data.repository.MediaProviderRegistry
 import com.ourshelf.app.data.repository.MediaRepository
 import com.ourshelf.app.data.repository.SearchRepository
 import com.ourshelf.app.ui.detail.DetailViewModel
+import com.ourshelf.app.ui.logbook.LogbookViewModel
 import com.ourshelf.app.ui.lounge.LoungeViewModel
 import com.ourshelf.app.ui.navigation.AppViewModel
 import com.ourshelf.app.ui.roulette.RouletteViewModel
@@ -162,6 +163,7 @@ val appModule = module {
     viewModelOf(::ShelfViewModel)
     viewModelOf(::ManageShelvesViewModel)
     viewModel { RouletteViewModel(get(), get(), get()) }
+    viewModelOf(::LogbookViewModel)
 }
 
 fun ourshelfModules(): List<Module> = listOf(platformModule, appModule)
