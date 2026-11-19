@@ -161,6 +161,24 @@
     <string name="onb_start">Let’s unwind</string>
     <string name="onb_skip">Skip</string>
 
+    <!-- Roulette -->
+    <string name="roulette_title">Pick for me</string>
+    <string name="roulette_from_shelf">From %1$s</string>
+    <string name="roulette_from_backlog">From your backlog</string>
+    <string name="roulette_spin">Spin</string>
+    <string name="roulette_spin_again">Spin again</string>
+    <string name="roulette_result">Tonight’s pick!</string>
+    <string name="roulette_start_now">Start now</string>
+    <string name="roulette_open">Details</string>
+    <string name="roulette_short">Short</string>
+    <string name="roulette_empty_title">Nothing to pick from</string>
+    <string name="roulette_empty_body">Add a few things to your backlog first.</string>
+    <string name="roulette_empty_filtered">No matches for these filters.</string>
+    <plurals name="roulette_count">
+        <item quantity="one">%1$d candidate</item>
+        <item quantity="other">%1$d candidates</item>
+    </plurals>
+
     <!-- Attribution -->
     <string name="attribution_tmdb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
 </resources>

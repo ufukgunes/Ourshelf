@@ -1,6 +1,7 @@
 package com.ourshelf.app.ui.lounge
 
 import com.ourshelf.app.resources.Res
+import com.ourshelf.app.resources.roulette_title
 import com.ourshelf.app.resources.app_name
 import com.ourshelf.app.resources.lounge_add
 import com.ourshelf.app.resources.lounge_backlog
@@ -40,6 +41,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SwapVert
@@ -90,6 +92,7 @@ fun LoungeRoute(
     onOpenShelf: (String) -> Unit,
     onManageShelves: () -> Unit,
     onOpenSettings: () -> Unit,
+    onPickForMe: () -> Unit,
     viewModel: LoungeViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -101,6 +104,7 @@ fun LoungeRoute(
         onManageShelves = onManageShelves,
         onOpenSettings = onOpenSettings,
         onCreateShelf = viewModel::createShelf,
+        onPickForMe = onPickForMe,
     )
 }
 
@@ -114,6 +118,7 @@ fun LoungeScreen(
     onManageShelves: () -> Unit,
     onOpenSettings: () -> Unit,
     onCreateShelf: (String, String) -> Unit,
+    onPickForMe: () -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var showNewShelf by rememberSaveable { mutableStateOf(false) }
@@ -171,7 +176,17 @@ fun LoungeScreen(
                 }
                 if (state.upNext.isNotEmpty()) {
                     item(key = "upnext") {
-                        Section(title = stringResource(Res.string.lounge_backlog)) {
+                        Column {
+                            SectionHeader(
+                                title = stringResource(Res.string.lounge_backlog),
+                                action = {
+                                    TextButton(onClick = onPickForMe) {
+                                        Icon(Icons.Filled.Casino, contentDescription = null, modifier = Modifier.size(18.dp))
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(stringResource(Res.string.roulette_title))
+                                    }
+                                },
+                            )
                             TitledPosterRow(state.upNext, "upnext", posterWidth = 112.dp, onOpenItem)
                         }
                     }

@@ -1,6 +1,7 @@
 package com.ourshelf.app.ui.shelf
 
 import com.ourshelf.app.resources.Res
+import com.ourshelf.app.resources.roulette_title
 import com.ourshelf.app.resources.action_back
 import com.ourshelf.app.resources.lounge_new_shelf
 import com.ourshelf.app.resources.lounge_shelf_empty
@@ -29,6 +30,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.RemoveCircleOutline
@@ -126,6 +128,7 @@ private fun <T> Modifier.moveActions(
 fun ShelfRoute(
     onBack: () -> Unit,
     onOpenItem: (itemId: String, sharedKey: String) -> Unit,
+    onPickForMe: (collectionId: String) -> Unit,
     viewModel: ShelfViewModel = koinViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -148,6 +151,11 @@ fun ShelfRoute(
                     }
                 },
                 actions = {
+                    if (shelf != null && shelf.items.isNotEmpty()) {
+                        IconButton(onClick = { onPickForMe(shelf.collection.id) }) {
+                            Icon(Icons.Filled.Casino, contentDescription = stringResource(Res.string.roulette_title))
+                        }
+                    }
                     if (shelf != null) {
                         IconButton(onClick = { editing = true }) {
                             Icon(Icons.Filled.Edit, contentDescription = stringResource(Res.string.shelf_dialog_rename_title))

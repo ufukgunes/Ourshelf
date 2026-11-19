@@ -66,6 +66,7 @@ import org.koin.compose.koinInject
 import com.ourshelf.app.ui.theme.OurshelfTheme
 import com.ourshelf.app.ui.onboarding.OnboardingScreen
 import com.ourshelf.app.ui.settings.SettingsSheet
+import com.ourshelf.app.ui.roulette.RouletteRoute as RouletteScreenRoute
 import com.ourshelf.app.ui.shelf.ManageShelvesRoute as ManageShelvesScreenRoute
 import com.ourshelf.app.ui.shelf.ShelfRoute as ShelfScreenRoute
 import com.ourshelf.app.ui.detail.DetailRoute as DetailScreenRoute
@@ -89,6 +90,10 @@ data class ShelfRoute(val collectionId: String)
 
 @Serializable
 data object ManageShelvesRoute
+
+/** [collectionId] null ise tüm "Sıradakiler"den seçer. */
+@Serializable
+data class RouletteRoute(val collectionId: String? = null)
 
 private data class TopLevelDestination(val route: Any, val icon: ImageVector, val labelRes: StringResource)
 
@@ -211,6 +216,7 @@ private fun UnwindNavHost(appViewModel: AppViewModel, onOpenSettings: () -> Unit
                                 },
                                 onOpenShelf = openShelf,
                                 onManageShelves = { navController.navigate(ManageShelvesRoute) },
+                                onPickForMe = { navController.navigate(RouletteRoute()) },
                                 onOpenSettings = onOpenSettings,
                             )
                         }
@@ -255,7 +261,19 @@ private fun UnwindNavHost(appViewModel: AppViewModel, onOpenSettings: () -> Unit
                     }
                     composable<ShelfRoute> {
                         WithVisibilityScope {
-                            ShelfScreenRoute(onBack = { navController.popBackStack() }, onOpenItem = openItem)
+                            ShelfScreenRoute(
+                                onBack = { navController.popBackStack() },
+                                onOpenItem = openItem,
+                                onPickForMe = { navController.navigate(RouletteRoute(it)) },
+                            )
+                        }
+                    }
+                    composable<RouletteRoute> {
+                        WithVisibilityScope {
+                            RouletteScreenRoute(
+                                onBack = { navController.popBackStack() },
+                                onOpenItem = { navController.navigate(DetailRoute(it)) },
+                            )
                         }
                     }
                     composable<ManageShelvesRoute> {

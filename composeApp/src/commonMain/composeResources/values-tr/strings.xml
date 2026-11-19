@@ -147,5 +147,22 @@
     <string name="onb_start">Başlayalım</string>
     <string name="onb_skip">Geç</string>
 
+    <string name="roulette_title">Benim için seç</string>
+    <string name="roulette_from_shelf">%1$s rafından</string>
+    <string name="roulette_from_backlog">Sıradakilerden</string>
+    <string name="roulette_spin">Çevir</string>
+    <string name="roulette_spin_again">Tekrar çevir</string>
+    <string name="roulette_result">Bu akşamki seçimin!</string>
+    <string name="roulette_start_now">Hemen başla</string>
+    <string name="roulette_open">Detay</string>
+    <string name="roulette_short">Kısa olsun</string>
+    <string name="roulette_empty_title">Seçilecek bir şey yok</string>
+    <string name="roulette_empty_body">Önce listene birkaç eser ekle.</string>
+    <string name="roulette_empty_filtered">Bu filtrelere uyan eser yok.</string>
+    <plurals name="roulette_count">
+        <item quantity="one">%1$d aday</item>
+        <item quantity="other">%1$d aday</item>
+    </plurals>
+
     <string name="attribution_tmdb">Bu ürün TMDB API’sini kullanır ancak TMDB tarafından onaylanmamış veya sertifikalandırılmamıştır.</string>
 </resources>

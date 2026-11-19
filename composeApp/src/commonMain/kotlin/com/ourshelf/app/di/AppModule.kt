@@ -30,6 +30,7 @@ import com.ourshelf.app.data.repository.SearchRepository
 import com.ourshelf.app.ui.detail.DetailViewModel
 import com.ourshelf.app.ui.lounge.LoungeViewModel
 import com.ourshelf.app.ui.navigation.AppViewModel
+import com.ourshelf.app.ui.roulette.RouletteViewModel
 import com.ourshelf.app.ui.search.SearchViewModel
 import com.ourshelf.app.ui.shelf.ManageShelvesViewModel
 import com.ourshelf.app.ui.shelf.ShelfViewModel
@@ -160,6 +161,7 @@ val appModule = module {
     viewModel { DetailViewModel(get(), get(), get(), get(AppScope)) }
     viewModelOf(::ShelfViewModel)
     viewModelOf(::ManageShelvesViewModel)
+    viewModel { RouletteViewModel(get(), get(), get()) }
 }
 
 fun ourshelfModules(): List<Module> = listOf(platformModule, appModule)
