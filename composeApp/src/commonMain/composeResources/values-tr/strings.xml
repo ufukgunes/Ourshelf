@@ -75,7 +75,7 @@
     <string name="search_no_results">“%1$s” için sonuç yok</string>
     <string name="search_error">%1$s ulaşılamadı. Bağlantını kontrol et.</string>
     <string name="search_retry">Tekrar dene</string>
-    <string name="search_demo_hint">Örnek veri: %1$s</string>
+    <string name="search_demo_hint">%1$s için örnek veri gösteriliyor (API anahtarı tanımlı değil)</string>
     <string name="search_add">Listeye ekle</string>
     <string name="search_added">Eklendi</string>
     <string name="search_added_snackbar">“%1$s” listene eklendi</string>

@@ -84,7 +84,7 @@
     <string name="search_no_results">No results for “%1$s”</string>
     <string name="search_error">Couldn’t reach %1$s. Check your connection.</string>
     <string name="search_retry">Retry</string>
-    <string name="search_demo_hint">Demo data: %1$s</string>
+    <string name="search_demo_hint">Sample data for %1$s (no API key configured)</string>
     <string name="search_add">Add to backlog</string>
     <string name="search_added">Added</string>
     <string name="search_added_snackbar">“%1$s” added to your backlog</string>

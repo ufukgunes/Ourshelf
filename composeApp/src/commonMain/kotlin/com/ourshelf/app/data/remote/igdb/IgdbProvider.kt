@@ -17,6 +17,7 @@ import io.ktor.http.contentType
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
+import kotlin.math.ln
 import kotlin.math.roundToInt
 
 /**
@@ -47,6 +48,8 @@ data class IgdbGame(
     val platforms: List<IgdbPlatform> = emptyList(),
     @SerialName("involved_companies") val involvedCompanies: List<IgdbInvolvedCompany> = emptyList(),
     val url: String? = null,
+    /** Kullanıcı + eleştirmen puan sayısı; popülerlik göstergesi olarak sıralamada kullanılır. */
+    @SerialName("total_rating_count") val totalRatingCount: Int? = null,
 )
 
 @Serializable
@@ -76,7 +79,7 @@ class IgdbProvider(private val api: IgdbApi) : MediaSearchProvider {
 
     override suspend fun search(query: String, type: MediaType, page: Int) = suspendRunCatching {
         if (type != MediaType.GAME) return@suspendRunCatching emptyList()
-        api.games(searchQuery(query, page)).map { it.toResult() }
+        rankByPopularity(api.games(searchQuery(query, page)), query).map { it.toResult() }
     }
 
     /** Tahmini bitirme süresini (normal oynanış) ekler. HowLongToBeat kullanılmaz. */
@@ -93,7 +96,7 @@ class IgdbProvider(private val api: IgdbApi) : MediaSearchProvider {
 
         private const val FIELDS = "name,summary,cover.image_id,artworks.image_id,first_release_date," +
             "genres.name,platforms.name,platforms.abbreviation," +
-            "involved_companies.company.name,involved_companies.developer,url"
+            "involved_companies.company.name,involved_companies.developer,url,total_rating_count"
 
         /** Kullanıcı girdisi Apicalypse dizesine güvenle gömülür (ters bölü ve tırnak kaçışlanır). */
         fun searchQuery(query: String, page: Int): String {
@@ -107,8 +110,29 @@ class IgdbProvider(private val api: IgdbApi) : MediaSearchProvider {
     }
 }
 
+/**
+ * "Bitirme süresi" olarak ana hikâye süresi (IGDB `hastily`: yan görevlere çok vakit ayırmadan jeneriğe kadar)
+ * gösterilir; yoksa normal, o da yoksa %100 tamamlama süresi.
+ */
 internal fun IgdbTimeToBeat.hours(): Int? =
-    (normally ?: hastily ?: completely)?.takeIf { it > 0 }?.let { (it / 3600.0).roundToInt().coerceAtLeast(1) }
+    (hastily ?: normally ?: completely)?.takeIf { it > 0 }?.let { (it / 3600.0).roundToInt().coerceAtLeast(1) }
+
+/**
+ * IGDB `search` sorgusu `sort` ile birleştirilemez ve kendi sıralaması zayıftır ("hades" araması 1995'ten az bilinen
+ * bir oyunu önce getirir). Sonuçlar popülerlik (puan sayısının logaritması) + başlık eşleşmesi ile yeniden sıralanır.
+ */
+internal fun rankByPopularity(games: List<IgdbGame>, query: String): List<IgdbGame> {
+    val q = query.trim().lowercase()
+    return games.sortedByDescending { game ->
+        val name = game.name.lowercase()
+        val titleBonus = when {
+            name == q -> 2.0
+            name.startsWith(q) -> 1.0
+            else -> 0.0
+        }
+        ln(1.0 + (game.totalRatingCount ?: 0)) + titleBonus
+    }
+}
 
 internal fun IgdbGame.toResult(): MediaSearchResult {
     val year = firstReleaseDate?.let { Instant.fromEpochSeconds(it).toLocalDateTime(TimeZone.UTC).year }

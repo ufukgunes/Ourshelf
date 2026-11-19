@@ -46,8 +46,9 @@ class IgdbMappingTest {
     }
 
     @Test
-    fun timeToBeatPrefersNormalPlaythroughAndRoundsToHours() {
-        assertEquals(22, IgdbTimeToBeat(1, hastily = 50_000, normally = 79_200).hours())
+    fun timeToBeatPrefersMainStoryAndRoundsToHours() {
+        assertEquals(14, IgdbTimeToBeat(1, hastily = 50_000, normally = 79_200).hours()) // ana hikâye öncelikli
+        assertEquals(22, IgdbTimeToBeat(1, normally = 79_200, completely = 200_000).hours())
         assertEquals(14, IgdbTimeToBeat(1, hastily = 50_000).hours())
         assertEquals(1, IgdbTimeToBeat(1, normally = 600).hours())
         assertNull(IgdbTimeToBeat(1).hours())

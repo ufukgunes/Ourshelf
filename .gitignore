@@ -19,3 +19,6 @@ xcuserdata/
 
 # Cloudflare Wrangler yerel önbelleği
 .wrangler/
+
+# JVM çökme günlükleri
+hs_err_pid*.log

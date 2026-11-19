@@ -4,6 +4,7 @@ import com.ourshelf.app.core.model.MediaMetadata
 import com.ourshelf.app.core.model.MediaSearchResult
 import com.ourshelf.app.core.model.MediaType
 import com.ourshelf.app.data.remote.MediaSearchProvider
+import com.ourshelf.app.data.remote.foldDiacritics
 import com.ourshelf.app.data.remote.subtitleOf
 import com.ourshelf.app.data.remote.suspendRunCatching
 import kotlinx.serialization.SerialName
@@ -66,7 +67,7 @@ class OpenLibraryProvider(private val api: OpenLibraryApi) : MediaSearchProvider
 
     override suspend fun search(query: String, type: MediaType, page: Int) = suspendRunCatching {
         if (type != MediaType.BOOK) return@suspendRunCatching emptyList()
-        api.search(query, page).docs.map { it.toResult() }
+        dedupeWorks(api.search(query, page).docs.map { it.toResult() })
     }
 
     suspend fun searchByIsbn(isbn: String) = suspendRunCatching {
@@ -87,6 +88,20 @@ class OpenLibraryProvider(private val api: OpenLibraryApi) : MediaSearchProvider
         fun coverUrl(coverId: Long?) = coverId?.let { "https://covers.openlibrary.org/b/id/$it-L.jpg" }
     }
 }
+
+/**
+ * OpenLibrary aynı kitabı birden fazla "work" kaydı olarak döndürebilir ("Kürk Mantolu Madonna" ×5).
+ * Başlık + ilk yazar aynı olanlar birleştirilir; kapağı olan kayıt tercih edilir, ilk görünme sırası korunur.
+ */
+internal fun dedupeWorks(results: List<MediaSearchResult>): List<MediaSearchResult> =
+    results
+        .groupBy { normalizedKey(it.title) + "|" + normalizedKey(it.metadata.creators.firstOrNull().orEmpty()) }
+        .values
+        .map { group -> group.firstOrNull { it.posterUrl != null } ?: group.first() }
+
+/** "Science-fiction", "Science fiction" ve "Kürk" / "Kurk" aynı anahtara iner. */
+internal fun normalizedKey(text: String): String =
+    foldDiacritics(text.lowercase()).filter { it.isLetterOrDigit() }
 
 internal fun OpenLibraryDoc.toResult(): MediaSearchResult {
     val workId = key.substringAfterLast('/')
@@ -127,6 +142,6 @@ private fun List<String>.cleanSubjects(): List<String> =
     asSequence()
         .filter { s -> s.length in 3..24 && s.none { it in NOISY_SUBJECT_CHARS } && !NOISY_SUBJECTS.containsMatchIn(s) }
         .map { s -> s.replaceFirstChar { it.uppercase() } }
-        .distinct()
+        .distinctBy(::normalizedKey)
         .take(3)
         .toList()
