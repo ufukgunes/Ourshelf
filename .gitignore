@@ -16,3 +16,6 @@ iosApp/*.xcodeproj
 iosApp/*.xcworkspace
 xcuserdata/
 *.xcuserstate
+
+# Cloudflare Wrangler yerel önbelleği
+.wrangler/
