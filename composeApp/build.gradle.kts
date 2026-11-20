@@ -28,6 +28,13 @@ val secretValues = mapOf(
     "TMDB_API_KEY" to secret("TMDB_API_KEY"),
     "IGDB_PROXY_URL" to secret("IGDB_PROXY_URL"),
     "IGDB_PROXY_KEY" to secret("IGDB_PROXY_KEY"),
+    // Firebase istemci yapılandırması (gizli değildir; güvenliği Firestore kuralları sağlar).
+    "FIREBASE_PROJECT_ID" to secret("FIREBASE_PROJECT_ID"),
+    "FIREBASE_SENDER_ID" to secret("FIREBASE_SENDER_ID"),
+    "FIREBASE_APP_ID_ANDROID" to secret("FIREBASE_APP_ID_ANDROID"),
+    "FIREBASE_APP_ID_IOS" to secret("FIREBASE_APP_ID_IOS"),
+    "FIREBASE_API_KEY_ANDROID" to secret("FIREBASE_API_KEY_ANDROID"),
+    "FIREBASE_API_KEY_IOS" to secret("FIREBASE_API_KEY_IOS"),
     "VERSION_NAME" to appVersionName,
 )
 
